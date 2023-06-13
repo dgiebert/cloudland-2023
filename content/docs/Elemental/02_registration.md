@@ -11,17 +11,17 @@ weight: 2
     config:
       cloud-config:
         users:
-        - name: root
-          passwd: rancher
+          - name: root
+            passwd: rancher
       elemental:
         install:
           reboot: true
           device: /dev/mmcblk0
           debug: true
           disable-boot-entry: true
-          registration:
-            emulate-tpm: true
-      machineInventoryLabels:
+        registration:
+          emulate-tpm: true
+    machineInventoryLabels:
       manufacturer: "${System Information/Manufacturer}"
       productName: "${System Information/Product Name}"
       serialNumber: "${System Information/Serial Number}"

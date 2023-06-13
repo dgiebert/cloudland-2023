@@ -59,6 +59,9 @@ weight: 4
     ```
 3. For the Raspberry Pi the image now needs to be modified please use the provided [rpi.sh](/assets/rpi.sh) script in the folder holding the `elemental-teal-arm64.iso`
 4. Write the resulting `elemental-teal-rpi.iso` to the USB key
+    ```sh
+    sudo dd if=elemental-teal-rpi.iso of=/dev/sda status=progress
+    ```
 
 ### Sources
 - https://github.com/dgiebert/elemental-iso-builder/tree/main

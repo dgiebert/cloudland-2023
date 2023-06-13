@@ -40,8 +40,20 @@ umount mount
 
 mount /dev/loop42p2 mount
 cp iso/rootfs.squashfs mount
-
 cp iso/livecd-cloud-config.yaml mount/
+
+mkdir -p mount/iso-config
+cat << HOOK > mount/iso-config/01_rpi-install-hook.yaml
+name: "Raspberry Pi after install hook"
+stages:
+    after-install:
+    - &copyfirmware
+      name: "Copy firmware to EFI partition"
+      commands:
+      - cp -a /run/cos/workingtree/boot/vc/* /run/cos/efi
+    after-reset:
+    - <<: *copyfirmware
+HOOK
 
 echo "Unmounting"
 losetup -d /dev/loop42
