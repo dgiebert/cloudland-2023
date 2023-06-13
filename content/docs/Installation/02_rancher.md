@@ -1,7 +1,6 @@
 ---
 weight: 2
 title: "Installing Rancher"
-bookToc: false
 ---
 
 # Installing Rancher Managment Server

@@ -1,7 +1,6 @@
 ---
 title: Building the ISO
 weight: 4
-bookToc: false
 ---
 
 # Building a the ISO

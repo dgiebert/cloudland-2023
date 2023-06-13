@@ -7,5 +7,6 @@ module:
 
 params:
   BookSearch: false
+  BookToC: false
   BookTheme: "auto"
   BookRepo: https://github.com/dgiebert/cloudland-2023

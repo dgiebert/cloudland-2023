@@ -1,7 +1,6 @@
 ---
 weight: 3
 title: "Enabling Rancher Extensions"
-bookToc: false
 ---
 
 # Enabling Rancher Extensions

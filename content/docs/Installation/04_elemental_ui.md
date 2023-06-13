@@ -1,7 +1,6 @@
 ---
 weight: 5
 title: "Enabling Elemental"
-bookToc: false
 ---
 
 ## Elemental Extension

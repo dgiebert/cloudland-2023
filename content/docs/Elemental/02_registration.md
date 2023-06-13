@@ -1,7 +1,6 @@
 ---
 title: Registration Endpoint
 weight: 2
-bookToc: false
 ---
 
 # Create the Registration Endpoints

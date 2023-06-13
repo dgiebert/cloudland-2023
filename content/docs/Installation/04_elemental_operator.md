@@ -1,7 +1,6 @@
 ---
 weight: 4
 title: "Install the Elemental Operator"
-bookToc: false
 ---
 
 ## Install the Elemental Operator

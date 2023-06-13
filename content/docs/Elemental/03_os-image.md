@@ -1,7 +1,6 @@
 ---
 title: Custom OS Image
 weight: 3
-bookToc: false
 ---
 
 # Building a custom OS Image

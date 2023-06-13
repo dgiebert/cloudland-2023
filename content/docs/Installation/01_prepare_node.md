@@ -1,7 +1,6 @@
 ---
 weight: 1
 title: "Preparing the node"
-bookToc: false
 ---
 
 # Installing Rancher
