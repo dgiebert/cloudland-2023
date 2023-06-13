@@ -37,7 +37,11 @@ bookToc: false
             dir:rootfs \
             --bootloader-in-rootfs \
             --squash-no-compression \
-            -o /output -n "elemental-teal-${TARGETARCH}"
+            -o /output -n "elemental-teal-${TARGETARCH}" && \
+        xorriso -indev "elemental-teal-${TARGETARCH}.iso" -outdev "output/elemental-teal-${TARGETARCH}.iso" -map overlay / -boot_image any replay
+
+    FROM scratch AS export
+    COPY --from=builder /iso/output .
     ```
 2. Build the ISO
     ```sh
