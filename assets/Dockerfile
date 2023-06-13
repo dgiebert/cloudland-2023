@@ -6,6 +6,8 @@ RUN rpm --import http://download.opensuse.org/distribution/leap/15.4/repo/oss/gp
     zypper --non-interactive in ncdu htop && \
     zypper clean --all
 
+COPY --chmod=0600 wifi.connection /etc/NetworkManager/system-connections/wifi.connection
+
 # IMPORTANT: /etc/os-release is used for versioning/upgrade. The
 # values here should reflect the tag of the image currently being built
 ARG IMAGE_REPO=norepo
