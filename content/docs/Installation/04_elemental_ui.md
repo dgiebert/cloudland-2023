@@ -12,3 +12,4 @@ bookToc: false
 
 ### Sources
 - https://ranchermanager.docs.rancher.com/integrations-in-rancher/rancher-extensions
+- https://elemental.docs.rancher.com/quickstart-ui
