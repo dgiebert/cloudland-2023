@@ -12,15 +12,15 @@ K3s includes a Helm Controller that manages installing, upgrading/reconfiguring,
     apiVersion: v1
     kind: Namespace
     metadata:
-    name: cattle-elemental-system
+      name: cattle-elemental-system
     ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChart
     metadata:
-    name: elemental-operator
-    namespace: cattle-elemental-system
+      name: elemental-operator
+      namespace: cattle-elemental-system
     spec:
-    chart: oci://registry.opensuse.org/isv/rancher/elemental/stable/charts/rancher/elemental-operator-chart
+      chart: oci://registry.opensuse.org/isv/rancher/elemental/stable/charts/rancher/elemental-operator-chart
     ```
 
 ### Sources
