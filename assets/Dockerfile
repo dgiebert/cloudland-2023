@@ -33,5 +33,9 @@ RUN rm -rf rootfs/etc/resolv.conf && \
         -n "elemental-teal-${TARGETARCH}" && \
     xorriso -indev "elemental-teal-${TARGETARCH}.iso" -outdev "output/elemental-teal-${TARGETARCH}.iso" -map overlay / -boot_image any replay
 
-FROM scratch AS export
+FROM scratch AS iso
 COPY --from=builder /iso/output .
+
+FROM busybox AS versions
+COPY versions.json /versions.json
+CMD ["/bin/cp","/versions.json","/data/output"]

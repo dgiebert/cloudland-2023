@@ -12,15 +12,16 @@ weight: 2
       cloud-config:
         users:
           - name: root
-            passwd: rancher
+            ssh_authorized_keys:
+              - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOY5nEt0qssNTouZzN4LPg8M3OyDAwGDDvreTUMA6hQ5
       elemental:
         install:
-          reboot: true
+          poweroff: true
           device: /dev/mmcblk0
-          debug: true
           disable-boot-entry: true
         registration:
           emulate-tpm: true
+          emulated-tpm-seed: -1
     machineInventoryLabels:
       manufacturer: "${System Information/Manufacturer}"
       productName: "${System Information/Product Name}"

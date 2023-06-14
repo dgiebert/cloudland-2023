@@ -53,7 +53,8 @@ weight: 3
       --platform linux/arm64,linux/amd64 \
       --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
-      --tag dgiebert/rpi-os-image:v0.0.1
+      --tag dgiebert/rpi-os-image:v0.0.1 \
+      --target os
     ```
     ```sh
     buildah manifest create dgiebert/rpi-os-image:v0.0.1
@@ -61,7 +62,8 @@ weight: 3
       --platform linux/arm64,linux/amd64 \
       --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
-      --manifest dgiebert/rpi-os-image:v0.0.1
+      --manifest dgiebert/rpi-os-image:v0.0.1 \
+      --target os
     buildah manifest push --all "localhost/dgiebert/rpi-os-image:v0.0.1" "docker://docker.io/dgiebert/rpi-os-image:v0.0.1"
     ```
 ### Sources

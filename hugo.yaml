@@ -6,7 +6,8 @@ module:
   - path: github.com/alex-shpak/hugo-book
 
 params:
-  BookSearch: false
-  BookToC: false
-  BookTheme: "auto"
-  BookRepo: https://github.com/dgiebert/cloudland-2023
+ BookSearch: false
+ BookToC: false
+ BookTheme: "auto"
+ BookRepo: https://github.com/dgiebert/cloudland-2023
+ BookLogo: 'logo.svg'

@@ -8,7 +8,8 @@ weight: 4
 > **Note**
 > Make sure to check [the requirements](/docs/elemental/02_os-image/)
 
-## Create a multi-stage 
+## Create a multi-stage
+1. Adapt the `wifi.connection.example` and copy it to `wifi.connection`
 1. Create a multi-stage a Dockerfile or use the provided [example](/assets/Dockerfile)
     ```Dockerfile
     FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-teal/5.3:latest AS os
@@ -18,7 +19,7 @@ weight: 4
         zypper addrepo --refresh http://download.opensuse.org/distribution/leap/15.4/repo/oss/ oss && \
         zypper --non-interactive in ncdu htop && \
         zypper clean --all
-
+    COPY --chmod=0600 wifi.connection /etc/NetworkManager/system-connections/wifi.connection
     # IMPORTANT: /etc/os-release is used for versioning/upgrade.
     ARG IMAGE_REPO=norepo
     ARG IMAGE_TAG=latest
@@ -39,7 +40,7 @@ weight: 4
             -o /output -n "elemental-teal-${TARGETARCH}" && \
         xorriso -indev "elemental-teal-${TARGETARCH}.iso" -outdev "output/elemental-teal-${TARGETARCH}.iso" -map overlay / -boot_image any replay
 
-    FROM scratch AS export
+    FROM scratch AS iso
     COPY --from=builder /iso/output .
     ```
 2. Build the ISO
@@ -48,6 +49,7 @@ weight: 4
       --platform linux/arm64,linux/amd64 \
       --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
+      --target iso \
       --output .
     ```
     ```sh
@@ -55,6 +57,7 @@ weight: 4
       --platform linux/arm64,linux/amd64 \
       --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
+      --target iso \
       --output .
     ```
 3. For the Raspberry Pi the image now needs to be modified please use the provided [rpi.sh](/assets/rpi.sh) script in the folder holding the `elemental-teal-arm64.iso`

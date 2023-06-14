@@ -7,6 +7,7 @@ hugo_stats.json
 assets/overlay/*.yaml
 assets/*.iso
 assets/*.iso.sha256
+assets/*.connection
 # Executable may be added to repository
 hugo.exe
 hugo.darwin
