@@ -1,0 +1,26 @@
+[
+    {
+      "metadata": {
+        "name": "v0.0.1"
+      },
+      "spec": {
+        "version": "v0.0.1",
+        "type": "container",
+        "metadata": {
+          "upgradeImage": "dgiebert/rpi-os-image:v0.0.1"
+        }
+      }
+    },
+    {
+        "metadata": {
+          "name": "v0.0.2"
+        },
+        "spec": {
+          "version": "v0.0.2",
+          "type": "container",
+          "metadata": {
+            "upgradeImage": "dgiebert/rpi-os-image:v0.0.2"
+          }
+        }
+      }
+]
