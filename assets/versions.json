@@ -1,26 +1,50 @@
 [
     {
-      "metadata": {
-        "name": "v0.0.1"
-      },
-      "spec": {
-        "version": "v0.0.1",
-        "type": "container",
         "metadata": {
-          "upgradeImage": "dgiebert/rpi-os-image:v0.0.1"
+            "name": "v0.0.1"
+        },
+        "spec": {
+            "version": "v0.0.1",
+            "type": "container",
+            "metadata": {
+                "upgradeImage": "dgiebert/rpi-os-image:v0.0.1"
+            }
         }
-      }
     },
     {
         "metadata": {
-          "name": "v0.0.2"
+            "name": "v0.0.2"
         },
         "spec": {
-          "version": "v0.0.2",
-          "type": "container",
-          "metadata": {
-            "upgradeImage": "dgiebert/rpi-os-image:v0.0.2"
-          }
+            "version": "v0.0.2",
+            "type": "container",
+            "metadata": {
+                "upgradeImage": "dgiebert/rpi-os-image:v0.0.2"
+            }
         }
-      }
+    },
+    {
+        "metadata": {
+            "name": "v0.0.3"
+        },
+        "spec": {
+            "version": "v0.0.3",
+            "type": "container",
+            "metadata": {
+                "upgradeImage": "dgiebert/rpi-os-image:v0.0.3"
+            }
+        }
+    },
+    {
+        "metadata": {
+            "name": "v0.0.4"
+        },
+        "spec": {
+            "version": "v0.0.4",
+            "type": "container",
+            "metadata": {
+                "upgradeImage": "dgiebert/rpi-os-image:v0.0.4"
+            }
+        }
+    }
 ]

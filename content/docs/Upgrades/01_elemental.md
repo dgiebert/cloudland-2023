@@ -58,11 +58,11 @@ weight: 1
     ```
 2. Create and upload the needed image
     ```sh
-    docker buildx build \
+    docker buildx build . \
       --target versions \
       --platform linux/arm64,linux/amd64 \
+      --push \
       -t dgiebert/rpi-os-versions
-    docker push dgiebert/rpi-os-versions
     ```
     ```sh
     buildah manifest create dgiebert/rpi-os-versions
