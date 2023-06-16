@@ -6,7 +6,7 @@ RUN rpm --import http://download.opensuse.org/distribution/leap/15.4/repo/oss/gp
     zypper --non-interactive rm k9s kernel-firmware* && \
     zypper --non-interactive in ncdu htop && \
     # Add for Raspberry
-    # zypper --non-interactive kernel-firmware-usb-network kernel-firmware-brcm kernel-firmware-bnx2 && \
+    # zypper --non-interactive in kernel-firmware-usb-network kernel-firmware-brcm kernel-firmware-bnx2 && \
     # Hack needed for Hetzner
     zypper --non-interactive rm selinux-tools && \
     zypper --non-interactive update && \

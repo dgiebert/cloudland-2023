@@ -30,7 +30,7 @@ weight: 3
         zypper --non-interactive rm k9s kernel-firmware* && \
         zypper --non-interactive in ncdu htop && \
         # Add for Raspberry
-        zypper --non-interactive kernel-firmware-usb-network kernel-firmware-brcm kernel-firmware-bnx2 && \
+        zypper --non-interactive in kernel-firmware-usb-network kernel-firmware-brcm kernel-firmware-bnx2 && \
         # Hack needed for Hetzner
         # zypper --non-interactive rm selinux-tools && \
         zypper --non-interactive update && \
@@ -58,32 +58,32 @@ weight: 3
     ```sh
     buildah login docker.io
     ```
-3. Export Docker Hub username
+3. Export the configuration and adapt it to your username and tag version
     ```sh
-    export DOCKER_USER=dgiebert
+    export IMAGE_REPO=dgiebert/rpi-os-image
+    export IMAGE_TAG=v0.0.1
     ```
 3. Build the OS Image
     ```sh
     docker buildx build . \
       --push \
       --platform linux/arm64 \
-      --build-arg IMAGE_REPO=${DOCKER_USER}/rpi-os-image \
-      --build-arg IMAGE_TAG=v0.0.1 \
-      --tag ${DOCKER_USER}/rpi-os-image:v0.0.1 \
+      --build-arg IMAGE_REPO=${IMAGE_REPO} \
+      --build-arg IMAGE_TAG=${IMAGE_TAG} \
+      --tag ${IMAGE_REPO}:${IMAGE_TAG} \
       --target os
     ```
     ```sh
-    buildah manifest create ${DOCKER_USER}/rpi-os-image:v0.0.1
+    buildah manifest create ${IMAGE_REPO}:${IMAGE_TAG}
     buildah build \
       --platform linux/arm64,linux/amd64 \
-      --build-arg IMAGE_REPO=${DOCKER_USER}/rpi-os-image \
-      --build-arg IMAGE_TAG=v0.0.1 \
-      --manifest ${DOCKER_USER}/rpi-os-image:v0.0.1 \
+      --build-arg IMAGE_REPO=${IMAGE_REPO} \
+      --build-arg IMAGE_TAG=${IMAGE_TAG} \
+      --manifest ${IMAGE_REPO}:${IMAGE_TAG} \
       --target os
-    buildah manifest push --all "localhost/${DOCKER_USER}/rpi-os-image:v0.0.1" "docker://docker.io/${DOCKER_USER}/rpi-os-image:v0.0.1"
+    buildah manifest push --all "localhost/${IMAGE_REPO}:${IMAGE_TAG}" "docker://docker.io/${IMAGE_REPO}:${IMAGE_TAG}"
     ```
 ### Sources
-- 
 - https://github.com/dgiebert/elemental-iso-builder/tree/main
 - https://elemental.docs.rancher.com/customizing
 

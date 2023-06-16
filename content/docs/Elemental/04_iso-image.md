@@ -10,53 +10,47 @@ weight: 4
 
 ## Create a multi-stage
 1. Adapt the `wifi.connection.example` and copy it to `wifi.connection`
-1. Create a multi-stage a Dockerfile or use the provided [example](/assets/Dockerfile)
+1. Append to the Dockerfile to create a multi-stage Dockerfile
     ```Dockerfile
-    FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-teal/5.3:latest AS os
-
-    # e.g check https://en.opensuse.org/Package_repositories
-    RUN rpm --import http://download.opensuse.org/distribution/leap/15.4/repo/oss/gpg-pubkey-3dbdc284-53674dd4.asc && \
-        zypper addrepo --refresh http://download.opensuse.org/distribution/leap/15.4/repo/oss/ oss && \
-        zypper --non-interactive in ncdu htop && \
-        zypper clean --all
-    COPY --chmod=0600 wifi.connection /etc/NetworkManager/system-connections/wifi.connection
-    # IMPORTANT: /etc/os-release is used for versioning/upgrade.
-    ARG IMAGE_REPO=norepo
-    ARG IMAGE_TAG=latest
-    RUN echo "IMAGE_REPO=${IMAGE_REPO}"          > /etc/os-release && \
-        echo "IMAGE_TAG=${IMAGE_TAG}"           >> /etc/os-release && \
-        echo "IMAGE=${IMAGE_REPO}:${IMAGE_TAG}" >> /etc/os-release
-    
     FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-builder-image/5.3:latest AS builder
     ARG TARGETARCH
     WORKDIR /iso
     COPY --from=os / rootfs
+    COPY overlay overlay
 
-    RUN --mount=type=bind,source=./,target=/output,rw \
+    # Fix needed for buildah
+    RUN rm -rf rootfs/etc/resolv.conf && \
+        ln -s /var/run/netconfig/resolv.conf rootfs/etc/resolv.conf && \
+        mkdir output && \
         elemental build-iso \
             dir:rootfs \
             --bootloader-in-rootfs \
             --squash-no-compression \
-            -o /output -n "elemental-teal-${TARGETARCH}" && \
+            -n "elemental-teal-${TARGETARCH}" && \
         xorriso -indev "elemental-teal-${TARGETARCH}.iso" -outdev "output/elemental-teal-${TARGETARCH}.iso" -map overlay / -boot_image any replay
 
     FROM scratch AS iso
     COPY --from=builder /iso/output .
     ```
+3. Export the configuration and adapt it to your username and tag version
+    ```sh
+    export IMAGE_REPO=dgiebert/rpi-os-image
+    export IMAGE_TAG=v0.0.1
+    ```
 2. Build the ISO
     ```sh
     docker buildx build . \
       --platform linux/arm64,linux/amd64 \
-      --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
-      --build-arg IMAGE_TAG=v0.0.1 \
+      --build-arg IMAGE_REPO=${IMAGE_REPO} \
+      --build-arg IMAGE_TAG=${IMAGE_TAG} \
       --target iso \
       --output .
     ```
     ```sh
     buildah build \
       --platform linux/arm64,linux/amd64 \
-      --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
-      --build-arg IMAGE_TAG=v0.0.1 \
+      --build-arg IMAGE_REPO=${IMAGE_REPO} \
+      --build-arg IMAGE_TAG=${IMAGE_TAG} \
       --target iso \
       --output .
     ```
