@@ -33,9 +33,9 @@ spec:
         secrets-encryption: true
       machineSelectorConfig:
       - config:
-        docker: false
-        protect-kernel-defaults: true
-        selinux: true
+          docker: false
+          protect-kernel-defaults: true
+          selinux: false
     nodepools:
     - name: elemental-server
       etcd: true

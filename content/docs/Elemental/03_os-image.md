@@ -19,16 +19,23 @@ weight: 3
 
 ## Your first OS Image
 
-1. Create a folder that holds the configuration e.g. rpi-image
 1. Create a Dockerfile
     ```Dockerfile
-    FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-teal/5.3:latest as os
+    FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-teal/5.3:latest AS build
 
     # e.g check https://en.opensuse.org/Package_repositories
     RUN rpm --import http://download.opensuse.org/distribution/leap/15.4/repo/oss/gpg-pubkey-3dbdc284-53674dd4.asc && \
         zypper addrepo --refresh http://download.opensuse.org/distribution/leap/15.4/repo/oss/ oss && \
+        zypper --non-interactive rm k9s kernel-firmware* && \
         zypper --non-interactive in ncdu htop && \
+        # Add for Raspberry
+        zypper --non-interactive kernel-firmware-usb-network kernel-firmware-brcm kernel-firmware-bnx2 && \
+        # Hack needed for Hetzner
+        # zypper --non-interactive rm selinux-tools && \
+        zypper --non-interactive update && \
         zypper clean --all
+
+    COPY --chmod=0600 wifi.connection /etc/NetworkManager/system-connections/wifi.connection
 
     # IMPORTANT: /etc/os-release is used for versioning/upgrade. The
     # values here should reflect the tag of the image currently being built
