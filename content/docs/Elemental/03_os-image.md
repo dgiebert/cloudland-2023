@@ -7,7 +7,7 @@ weight: 3
 
 ## Preparing your machine
 1. Install [docker](https://docs.docker.com/engine/install/) or [buildah](https://github.com/containers/buildah/blob/main/install.md)
-1. Install emulators to build cross-platform
+1. Install emulators to build cross-platform [source](https://github.com/tonistiigi/binfmt)
     ```sh
     docker run --privileged --rm tonistiigi/binfmt --install arm64
     ```
@@ -19,6 +19,7 @@ weight: 3
 
 ## Your first OS Image
 
+1. Use the [wifi.connection.example](https://github.com/dgiebert/cloudland-2023/blob/master/assets/wifi.connection.example) and place it in the same folder named `wifi.connection`
 1. Create a Dockerfile
     ```Dockerfile
     FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-teal/5.3:latest AS build
