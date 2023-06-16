@@ -46,7 +46,7 @@ weight: 3
         echo "IMAGE_TAG=${IMAGE_TAG}"           >> /etc/os-release && \
         echo "IMAGE=${IMAGE_REPO}:${IMAGE_TAG}" >> /etc/os-release
     ```
-2. Customize and add packages you want to have on the nodes
+2. Customize and add packages by appending to the zypper install or add complete custom Dockerfile commands 
 3. Login to registry
     ```sh
     docker login
@@ -54,25 +54,29 @@ weight: 3
     ```sh
     buildah login docker.io
     ```
+3. Export Docker Hub username
+    ```sh
+    export DOCKER_USER=dgiebert
+    ```
 3. Build the OS Image
     ```sh
     docker buildx build . \
       --push \
-      --platform linux/arm64,linux/amd64 \
-      --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
+      --platform linux/arm64 \
+      --build-arg IMAGE_REPO=${DOCKER_USER}/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
-      --tag dgiebert/rpi-os-image:v0.0.1 \
+      --tag ${DOCKER_USER}/rpi-os-image:v0.0.1 \
       --target os
     ```
     ```sh
-    buildah manifest create dgiebert/rpi-os-image:v0.0.1
+    buildah manifest create ${DOCKER_USER}/rpi-os-image:v0.0.1
     buildah build \
       --platform linux/arm64,linux/amd64 \
-      --build-arg IMAGE_REPO=dgiebert/rpi-os-image \
+      --build-arg IMAGE_REPO=${DOCKER_USER}/rpi-os-image \
       --build-arg IMAGE_TAG=v0.0.1 \
-      --manifest dgiebert/rpi-os-image:v0.0.1 \
+      --manifest ${DOCKER_USER}/rpi-os-image:v0.0.1 \
       --target os
-    buildah manifest push --all "localhost/dgiebert/rpi-os-image:v0.0.1" "docker://docker.io/dgiebert/rpi-os-image:v0.0.1"
+    buildah manifest push --all "localhost/${DOCKER_USER}/rpi-os-image:v0.0.1" "docker://docker.io/${DOCKER_USER}/rpi-os-image:v0.0.1"
     ```
 ### Sources
 - 
