@@ -45,6 +45,10 @@ weight: 3
     RUN echo "IMAGE_REPO=${IMAGE_REPO}"          > /etc/os-release && \
         echo "IMAGE_TAG=${IMAGE_TAG}"           >> /etc/os-release && \
         echo "IMAGE=${IMAGE_REPO}:${IMAGE_TAG}" >> /etc/os-release
+
+    # Flatten the image to reduce the final size since we are not interested in layers
+    FROM scratch as os
+    COPY --from=build / /
     ```
 2. Customize and add packages by appending to the zypper install or add complete custom Dockerfile commands 
 3. Login to registry
