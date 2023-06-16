@@ -1,9 +1,9 @@
 ---
-title: Elemental OS
-weight: 1
+title: Upgrade OS
+weight: 5
 ---
 
-# Elemental OS
+# Upgrade OS
 
 1. Export the configuration and adapt it to your username and tag version
     ```sh
