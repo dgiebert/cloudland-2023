@@ -40,7 +40,7 @@ weight: 4
 2. Build the ISO
     ```sh
     docker buildx build . \
-      --platform linux/arm64,linux/amd64 \
+      --platform linux/arm64 \
       --build-arg IMAGE_REPO=${IMAGE_REPO} \
       --build-arg IMAGE_TAG=${IMAGE_TAG} \
       --target iso \
@@ -48,7 +48,7 @@ weight: 4
     ```
     ```sh
     buildah build \
-      --platform linux/arm64,linux/amd64 \
+      --platform linux/arm64 \
       --build-arg IMAGE_REPO=${IMAGE_REPO} \
       --build-arg IMAGE_TAG=${IMAGE_TAG} \
       --target iso \
