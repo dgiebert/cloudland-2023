@@ -21,13 +21,17 @@ weight: 4
           emulate-tpm: true
           emulated-tpm-seed: -1
     machineInventoryLabels:
-      registrationEndpoint: rpi
+      registrationEndpoint: hetzner
       manufacturer: "${System Information/Manufacturer}"
       productName: "${System Information/Product Name}"
       serialNumber: "${System Information/Serial Number}"
       machineUUID: "${System Information/UUID}"
     ```
 1. Put the vServer or Server into rescue mode
+1. Export your registration url
+    ```sh
+    export REGISTRATION_URL=https.....
+    ```
 2. SSH and execute the commands to register the nodes
     ```sh
     # Install dependencies
@@ -45,6 +49,6 @@ weight: 4
     cd elemental-operator/
     make register
     # Register and reboot
-    ./build/elemental-register --registration-url https://cloudland.giebert.dev/elemental/registration/vg9f84spkxsm2vxrp7ngwb9dl5lqllzlw8qq48xkpk78dmbs8kwsxz --emulate-tpm true --emulated-tpm-seed -1
+    ./build/elemental-register --registration-url ${REGISTRATION_URL} --emulate-tpm true --emulated-tpm-seed -1
     reboot
     ```

@@ -9,7 +9,6 @@ weight: 4
 > Make sure to check [the requirements](/docs/elemental/02_os-image/)
 
 ## Create a multi-stage
-1. Adapt the `wifi.connection.example` and copy it to `wifi.connection`
 1. Append to the Dockerfile to create a multi-stage Dockerfile
     ```Dockerfile
     FROM registry.opensuse.org/isv/rancher/elemental/stable/teal53/15.4/rancher/elemental-builder-image/5.3:latest AS builder
@@ -54,7 +53,12 @@ weight: 4
       --target iso \
       --output .
     ```
-3. For the Raspberry Pi the image now needs to be modified please use the provided [rpi.sh](/assets/rpi.sh) script in the folder holding the `elemental-teal-arm64.iso`
+3. For the Raspberry Pi the image now needs to be modified please use the provided rpi.sh script in the folder holding the `elemental-teal-arm64.iso`
+    ```sh
+    wget https://raw.githubusercontent.com/dgiebert/cloudland-2023/master/assets/rpi.sh
+    chmod +x rpi.sh
+    ./rpi.sh
+    ```
 4. Write the resulting `elemental-teal-rpi.iso` to the USB key
     ```sh
     sudo dd if=elemental-teal-rpi.iso of=/dev/sda status=progress
