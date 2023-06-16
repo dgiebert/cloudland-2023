@@ -60,11 +60,11 @@ weight: 5
     ]
     ```
 1. Append to the Dockerfile to create a multi-stage Dockerfile
-  ```Dockerfile
-  FROM busybox AS versions
-  COPY versions.json /versions.json
-  CMD ["/bin/cp","/versions.json","/data/output"]
-  ```
+    ```Dockerfile
+    FROM busybox AS versions
+    COPY versions.json /versions.json
+    CMD ["/bin/cp","/versions.json","/data/output"]
+    ```
 2. Create and upload the needed image
     ```sh
     docker buildx build . \
