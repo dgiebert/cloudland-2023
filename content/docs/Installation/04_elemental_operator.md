@@ -16,10 +16,20 @@ K3s includes a Helm Controller that manages installing, upgrading/reconfiguring,
     apiVersion: helm.cattle.io/v1
     kind: HelmChart
     metadata:
+      name: elemental-operator-crds
+      namespace: cattle-elemental-system
+    spec:
+      chart: oci://registry.opensuse.org/isv/rancher/elemental/dev/charts/rancher/elemental-operator-crds-chart
+      version: 1.2.4
+    ---
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
       name: elemental-operator
       namespace: cattle-elemental-system
     spec:
       chart: oci://registry.opensuse.org/isv/rancher/elemental/dev/charts/rancher/elemental-operator-chart
+      version: 1.2.5
     ```
 
 ### Sources
