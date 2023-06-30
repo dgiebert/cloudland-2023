@@ -1,0 +1,63 @@
+FROM opensuse/leap:15.4 AS build
+COPY --chmod=0600 wifi.connection /etc/NetworkManager/system-connections/wifi.connection
+
+# IMPORTANT: Needed packages
+RUN rpm --import https://download.opensuse.org/repositories/isv:/Rancher:/Elemental:/Dev/15.4/repodata/repomd.xml.key && \
+    zypper addrepo -r https://download.opensuse.org/repositories/isv:/Rancher:/Elemental:/Dev/15.4/isv:Rancher:Elemental:Dev.repo && \
+    zypper -n in \
+        elemental kernel-default shim openssh nvme-cli jq \
+        nfs-client rng-tools iproute2 squashfs open-iscsi \
+        tar gzip dmidecode timezone sudo less vim-small && \
+    cp /usr/share/systemd/tmp.mount /etc/systemd/system && \
+    systemctl enable NetworkManager 
+
+# Raspberry Pi 3B+/4 packages
+RUN rpm --import https://download.opensuse.org/repositories/hardware:/boot/openSUSE_Factory_ARM/repodata/repomd.xml.key && \
+    zypper addrepo -r https://download.opensuse.org/repositories/hardware:/boot/openSUSE_Factory_ARM/hardware:boot.repo && \
+    zypper -n in \
+        raspberrypi-firmware-dt raspberrypi-firmware \
+        u-boot-rpiarm64 raspberrypi-firmware-config \
+        kernel-firmware-brcm kernel-firmware-bnx2
+
+RUN zypper -n update && \
+    zypper clean --all
+
+# IMPORTANT: /etc/os-release is used for versioning/upgrade.
+ARG IMAGE_REPO=norepo
+ARG IMAGE_TAG=latest
+RUN echo "IMAGE_REPO=${IMAGE_REPO}"          > /etc/os-release && \
+    echo "IMAGE_TAG=${IMAGE_TAG}"           >> /etc/os-release && \
+    echo "IMAGE=${IMAGE_REPO}:${IMAGE_TAG}" >> /etc/os-release
+
+# Install and enable the elemental configuration files
+RUN dracut -f --regenerate-all && \
+    ln -s $(readlink /boot/Image) /boot/vmlinuz &&\
+    rm -rf /boot/vmlinux*
+
+# Flatten the image to reduce the final size since we are not interested in layers
+FROM scratch as os
+COPY --from=build / /
+
+FROM registry.opensuse.org/isv/rancher/elemental/dev/teal53/15.4/rancher/elemental-builder-image/5.3:latest AS builder
+ARG TARGETARCH
+WORKDIR /iso
+COPY --from=os / rootfs
+COPY overlay overlay
+
+# Fix needed for buildah
+RUN rm -rf rootfs/etc/resolv.conf && \
+    ln -s /var/run/netconfig/resolv.conf rootfs/etc/resolv.conf && \
+    mkdir output && \
+    elemental build-iso \
+        dir:rootfs \
+        --bootloader-in-rootfs \
+        --squash-no-compression \
+        -n "elemental-teal-${TARGETARCH}" && \
+    xorriso -indev "elemental-teal-${TARGETARCH}.iso" -outdev "output/elemental-teal-${TARGETARCH}.iso" -map overlay / -boot_image any replay
+
+FROM scratch AS iso
+COPY --from=builder /iso/output .
+
+FROM busybox AS versions
+COPY versions.json /versions.json
+CMD ["/bin/cp","/versions.json","/data/output"]
