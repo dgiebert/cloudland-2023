@@ -5,45 +5,9 @@
         },
         "spec": {
             "version": "v0.0.1",
-            "type": "container",
+            "type": "iso",
             "metadata": {
-                "upgradeImage": "dgiebert/rpi-os-image:v0.0.1"
-            }
-        }
-    },
-    {
-        "metadata": {
-            "name": "v0.0.2"
-        },
-        "spec": {
-            "version": "v0.0.2",
-            "type": "container",
-            "metadata": {
-                "upgradeImage": "dgiebert/rpi-os-image:v0.0.2"
-            }
-        }
-    },
-    {
-        "metadata": {
-            "name": "v0.0.3"
-        },
-        "spec": {
-            "version": "v0.0.3",
-            "type": "container",
-            "metadata": {
-                "upgradeImage": "dgiebert/rpi-os-image:v0.0.3"
-            }
-        }
-    },
-    {
-        "metadata": {
-            "name": "v0.0.4"
-        },
-        "spec": {
-            "version": "v0.0.4",
-            "type": "container",
-            "metadata": {
-                "upgradeImage": "dgiebert/rpi-os-image:v0.0.4"
+                "upgradeImage": "dgiebert/elemental-seed-5.4:v0.0.1"
             }
         }
     }
