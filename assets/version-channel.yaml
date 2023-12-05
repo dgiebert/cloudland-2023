@@ -1,0 +1,12 @@
+apiVersion: elemental.cattle.io/v1beta1
+kind: ManagedOSVersionChannel
+metadata:
+  name: small-versions
+  namespace: fleet-default
+spec:
+  options:
+    Timeout: 1m
+    URI: >-
+      https://raw.githubusercontent.com/dgiebert/cloudland-2023/master/assets/versions.json
+  syncInterval: 1h
+  type: json
