@@ -1,6 +1,19 @@
 [
     {
         "metadata": {
+            "name": "v0.0.3"
+        },
+        "spec": {
+            "version": "v0.0.3",
+            "type": "iso",
+            "metadata": {
+                "uri": "dgiebert/elemental-seed-5.4:v0.0.3",
+                "displayName": "Elemental Minimal ISO x86_64"
+            }
+        }
+    },
+    {
+        "metadata": {
             "name": "v0.0.2"
         },
         "spec": {
